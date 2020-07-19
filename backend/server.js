@@ -1,31 +1,32 @@
 require('dotenv').config({ path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env' });
-const { env: { NODE_ENV, SERVER_PORT, DB_NAME } } = process;
+const { env: { NODE_ENV, SERVER_PORT, MONGODB_URI } } = process;
 
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
-const typeDefs = gql`
-    type Query {
-        hello: String
-    }
-`;
-
-const resolvers = {
-  Query: {
-      hello: () => 'Hello world!'
-  }
-};
+const typeDefs = require('./typeDefs');
+const resolvers = require('./resolvers');
 
 ( async () => {
 
-    const mongooseOptions = { useNewUrlParser: true, useUnifiedTopology: true };
-    await mongoose.connect(`mongodb://localhost/${DB_NAME}`, mongooseOptions);
+    try {
+        const mongooseOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+        await mongoose.connect(MONGODB_URI, mongooseOptions);
+    } catch (err) {
+        return console.error(err);
+    }
 
     const server = new ApolloServer({
         typeDefs,
-        resolvers
+        resolvers,
+        playground: NODE_ENV !== 'production',
+        formatError: (err) => {
+            // Don't give the specific errors to the client on production
+            if (err && NODE_ENV === 'production') return new Error(err.message);
+            return err;
+        },
     });
 
     server.applyMiddleware({ app });
@@ -38,3 +39,5 @@ const resolvers = {
     });
 
 })();
+
+module.exports = { app };
