@@ -1,55 +1,58 @@
 import React from 'react';
-import { Container, Columns, Form, Level, Box, Button } from 'react-bulma-components';
+import { FormInput } from "./parts/FormInput";
+import { Formik, Form } from 'formik'
+import {
+    Container,
+    Columns,
+    Form as BulmaForm,
+    Level, Box, Button
+} from 'react-bulma-components';
+
 const { Column } = Columns;
-const { Input, Field, Control, Label, Help } = Form;
+const { Field, Control } = BulmaForm;
 
 export const RegistrationForm = () => {
+
+    const inputs = [
+        { name: 'firstName', label: 'First name' },
+        { name: 'lastName', label: 'Last name' },
+        { name: 'email', label: 'Email', type: 'email' },
+        { name: 'eventDate', label: 'Event date', type: 'date' },
+    ];
+
+    const initValues = Object.fromEntries(inputs.map(item => [ [item.name], '' ]));
 
     return (
         <Container>
             <Columns>
                 <Column className="is-half is-offset-one-quarter">
                     <Box>
-                        <form>
-                            <Field>
-                                <Label>First name</Label>
-                                <Control>
-                                    <Input type='text' placeholder='test'/>
-                                </Control>
-                                <Help color="success">is ok</Help>
-                            </Field>
-                            <Field>
-                                <Label>Last name</Label>
-                                <Control>
-                                    <Input type='text' placeholder='test'/>
-                                </Control>
-                                <Help color="success">is ok</Help>
-                            </Field>
-                            <Field>
-                                <Label>Email</Label>
-                                <Control>
-                                    <Input type='text' placeholder='test'/>
-                                </Control>
-                                <Help color="success">is ok</Help>
-                            </Field>
-                            <Field>
-                                <Label>Event date</Label>
-                                <Control>
-                                    <Input type='text' placeholder='test'/>
-                                </Control>
-                                <Help color="success">is ok</Help>
-                            </Field>
+                        <Formik
+                            enableReinitialize={true}
+                            initialValues={initValues}
+                            // todo with Yup
+                            // validationSchema={validationSchema}
+                            onSubmit={(values) => {
+                                // saveData(values)
+                                console.log('values', values)
+                            }}
+                        >
+                            {({ handleSubmit, handleReset }) => (
+                                <Form autoComplete="off">
+                                    { inputs.map(({ name, label, type }, index) => <FormInput name={name} label={label} type={type} placeholder={label} key={index}/>) }
 
+                                    <Field kind="group" className="has-text-centered is-block">
+                                        <Control className="is-inline-block">
+                                            <Button className="is-success is-focused" onClick={handleSubmit}>Register</Button>
+                                        </Control>
+                                        <Control className="is-inline-block">
+                                            <Button className="is-light is-focused" onClick={handleReset}>Reset</Button>
+                                        </Control>
+                                    </Field>
 
-                            <Field kind="group" className="has-text-centered is-block">
-                                <Control className="is-inline-block">
-                                    <Button className="is-success">Register</Button>
-                                </Control>
-                                <Control className="is-inline-block">
-                                    <Button className="is-light">Reset</Button>
-                                </Control>
-                            </Field>
-                        </form>
+                                </Form>
+                            )}
+                        </Formik>
                     </Box>
                 </Column>
             </Columns>

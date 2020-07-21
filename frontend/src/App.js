@@ -5,7 +5,7 @@ import { RegistrationForm } from "./components/RegistrationForm";
 function App() {
   return (
       <div className="App">
-          <Hero color="info" size="fullheight" style={{background: `rgba(0, 0, 0, 0.3)`}}>
+          <Hero size="fullheight" style={{background: `rgba(0, 0, 0, 0.3)`}}>
                   <Notification color='success'>test notification</Notification>
                   <Hero.Body>
                       <Container>
