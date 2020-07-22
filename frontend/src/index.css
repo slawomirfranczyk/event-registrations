@@ -9,5 +9,5 @@ body {
 }
 
 .react-datepicker-wrapper, .react-datepicker__input-container {
-  width: 100%;
+  width: 100% !important;
 }

@@ -32,8 +32,9 @@ export const RegistrationForm = () => {
                             initialValues={initValues}
                             // todo with Yup
                             // validationSchema={validationSchema}
-                            onSubmit={(values) => {
-                                // saveData(values)
+                            onSubmit={values => {
+                                values = { ...values, eventDate: values.eventDate.toISOString().toString().replace(/T.+/,'') };
+                                // todo call api
                                 console.log('values', values)
                             }}
                         >
