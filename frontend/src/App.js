@@ -29,7 +29,7 @@ function App() {
                 <Hero.Body>
                     <Container>
                         <Heading className="has-text-white has-text-centered">
-                            REGISTER FOR AN EVENT
+                            REGISTER FOR THE EVENT
                         </Heading>
                         <RegistrationForm {...registrationFormProps}/>
                     </Container>
