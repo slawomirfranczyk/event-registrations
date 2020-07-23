@@ -10,7 +10,9 @@ export const FormInput = ({ label, ...props }) => {
 
     const [field] = useField(props);
     const { setFieldValue, touched, errors, handleBlur } = useFormikContext();
-    const checkIfValid = () => touched[field.name] && !errors[field.name] ? 'is-success' : '';
+    const isSuccess = touched[field.name] && !errors[field.name] ? 'is-success' : '';
+    const isError = touched[field.name] && errors[field.name] ? 'is-danger' : '';
+    const errorMessage = touched[field.name] && errors[field.name];
 
     return (
         <Field>
@@ -30,12 +32,12 @@ export const FormInput = ({ label, ...props }) => {
                                 setFieldValue(field.name, val)
                             }}
                             minDate={new Date()}
-                            className={`input ${checkIfValid()}`}
+                            className={`input ${isError || isSuccess}`}
                         />
-                        : <Input id={field.name} {...field} {...props} className={checkIfValid()}/>
+                        : <Input id={field.name} {...field} {...props} className={isError || isSuccess}/>
                 }
             </Control>
-            {/*{validationMessage && <Help color={validationMessageType}>{message}</Help>}*/}
+            {!isSuccess && <Help color='danger'>{errorMessage}</Help>}
         </Field>
     );
 };

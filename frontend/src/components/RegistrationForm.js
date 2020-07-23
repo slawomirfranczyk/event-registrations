@@ -10,6 +10,7 @@ import {
 } from 'react-bulma-components';
 import {callAPI, prepareDataBeforeSend} from '../utils';
 import { CREATE_EVENT_REGISTRATION_MUTATION } from  '../graphQLMutations';
+import * as yup from 'yup';
 
 const { Column } = Columns;
 const { Field, Control } = BulmaForm;
@@ -17,13 +18,38 @@ const { Field, Control } = BulmaForm;
 export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
 
     const inputs = [
-        { name: 'firstName', label: 'First name' },
-        { name: 'lastName', label: 'Last name' },
-        { name: 'email', label: 'Email', type: 'email' },
-        { name: 'eventDate', label: 'Event date', type: 'date' },
+        {
+            name: 'firstName',
+            label: 'First name',
+            validation: yup.string().trim().required('First name is required')
+        },
+        {
+            name: 'lastName',
+            label: 'Last name',
+            validation: yup.string().trim().required('Last name is required')
+        },
+        {
+            name: 'email',
+            label: 'Email',
+            type: 'email',
+            validation: yup.string().required('Email is required').email('Email is invalid')
+        },
+        {
+            name: 'eventDate',
+            label: 'Event date',
+            type: 'date',
+            validation: yup.date().required('You must select an event date')
+        }
     ];
 
+    const getValidationRules = inputs => {
+      const validationRules = {};
+      inputs.forEach(({ name, validation }) => { validationRules[name] = validation });
+      return validationRules;
+    };
+
     const initValues = Object.fromEntries(inputs.map(item => [ [item.name], '' ]));
+    const validationSchema = yup.object().shape(getValidationRules(inputs));
 
     const handleResetNotification = () => {
         setTimeout(() => {
@@ -39,15 +65,15 @@ export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
                         <Formik
                             enableReinitialize={true}
                             initialValues={initValues}
-                            // todo with Yup
-                            // validationSchema={validationSchema}
-                            onSubmit={ async  values => {
+                            validationSchema={validationSchema}
+                            onSubmit={ async (values, { resetForm }) => {
 
                                 const valuesToSend = prepareDataBeforeSend(values);
 
                                 try {
                                     setRequestStatus(currStatus => ({ ...currStatus, isLoading: true }));
                                     await callAPI(CREATE_EVENT_REGISTRATION_MUTATION, { data: { ...valuesToSend } });
+                                    resetForm({});
                                     setRequestStatus(currStatus => ({ ...currStatus, isLoading: false, success: true }));
                                 } catch (err) {
                                     setRequestStatus(currStatus => ({ ...currStatus, isLoading: false, error: true }));
@@ -65,6 +91,7 @@ export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
                                     <Field kind="group" className="has-text-centered is-block">
                                         <Control className="is-inline-block">
                                             <Button
+                                                type="submit"
                                                 className="is-success is-focused"
                                                 onClick={handleSubmit}
                                             >
