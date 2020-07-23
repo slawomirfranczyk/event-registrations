@@ -5,7 +5,8 @@ import {
     Container,
     Columns,
     Form as BulmaForm,
-    Level, Box, Button
+    Box,
+    Button
 } from 'react-bulma-components';
 import {callAPI, prepareDataBeforeSend} from '../utils';
 import { CREATE_EVENT_REGISTRATION_MUTATION } from  '../graphQLMutations';

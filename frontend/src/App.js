@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Notification, Section, Hero, Heading } from 'react-bulma-components';
+import { Container, Notification, Hero, Heading } from 'react-bulma-components';
 import { RegistrationForm } from "./components/RegistrationForm";
 
 function App() {
