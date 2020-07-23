@@ -13,7 +13,7 @@ import { CREATE_EVENT_REGISTRATION_MUTATION } from  '../graphQLMutations';
 const { Column } = Columns;
 const { Field, Control } = BulmaForm;
 
-export const RegistrationForm = () => {
+export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
 
     const inputs = [
         { name: 'firstName', label: 'First name' },
@@ -23,6 +23,12 @@ export const RegistrationForm = () => {
     ];
 
     const initValues = Object.fromEntries(inputs.map(item => [ [item.name], '' ]));
+
+    const handleResetNotification = () => {
+        setTimeout(() => {
+            setRequestStatus(() => ({ isLoading: false, success: false, error: false }));
+        }, 4 * 1000);
+    };
 
     return (
         <Container>
@@ -39,11 +45,15 @@ export const RegistrationForm = () => {
                                 const valuesToSend = prepareDataBeforeSend(values);
 
                                 try {
+                                    setRequestStatus(currStatus => ({ ...currStatus, isLoading: true }));
                                     await callAPI(CREATE_EVENT_REGISTRATION_MUTATION, { data: { ...valuesToSend } });
-                                    console.log('success!');
+                                    setRequestStatus(currStatus => ({ ...currStatus, isLoading: false, success: true }));
                                 } catch (err) {
-                                    console.error('Oh no!', err);
+                                    setRequestStatus(currStatus => ({ ...currStatus, isLoading: false, error: true }));
+                                    if (process.env.NODE_ENV === 'development') console.error(err);
                                 }
+
+                                handleResetNotification();
 
                             }}
                         >
@@ -53,10 +63,20 @@ export const RegistrationForm = () => {
 
                                     <Field kind="group" className="has-text-centered is-block">
                                         <Control className="is-inline-block">
-                                            <Button className="is-success is-focused" onClick={handleSubmit}>Register</Button>
+                                            <Button
+                                                className="is-success is-focused"
+                                                onClick={handleSubmit}
+                                            >
+                                                Register
+                                            </Button>
                                         </Control>
                                         <Control className="is-inline-block">
-                                            <Button className="is-light is-focused" onClick={handleReset}>Reset</Button>
+                                            <Button
+                                                className="is-light is-focused"
+                                                onClick={handleReset}
+                                            >
+                                                Reset
+                                            </Button>
                                         </Control>
                                     </Field>
 
