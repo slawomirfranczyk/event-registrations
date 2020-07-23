@@ -7,6 +7,8 @@ import {
     Form as BulmaForm,
     Level, Box, Button
 } from 'react-bulma-components';
+import {callAPI, prepareDataBeforeSend} from '../utils';
+import { CREATE_EVENT_REGISTRATION_MUTATION } from  '../graphQLMutations';
 
 const { Column } = Columns;
 const { Field, Control } = BulmaForm;
@@ -32,10 +34,17 @@ export const RegistrationForm = () => {
                             initialValues={initValues}
                             // todo with Yup
                             // validationSchema={validationSchema}
-                            onSubmit={values => {
-                                values = { ...values, eventDate: values.eventDate.toISOString().toString().replace(/T.+/,'') };
-                                // todo call api
-                                console.log('values', values)
+                            onSubmit={ async  values => {
+
+                                const valuesToSend = prepareDataBeforeSend(values);
+
+                                try {
+                                    await callAPI(CREATE_EVENT_REGISTRATION_MUTATION, { data: { ...valuesToSend } });
+                                    console.log('success!');
+                                } catch (err) {
+                                    console.error('Oh no!', err);
+                                }
+
                             }}
                         >
                             {({ handleSubmit, handleReset }) => (
