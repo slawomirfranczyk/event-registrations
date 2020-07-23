@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bulma-components';
 import DatePicker from 'react-datepicker';
 import { useField, useFormikContext } from 'formik';
@@ -40,4 +41,14 @@ export const FormInput = ({ label, ...props }) => {
             {!isSuccess && <Help color='danger'>{errorMessage}</Help>}
         </Field>
     );
+};
+
+FormInput.propTypes = {
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired
+};
+
+FormInput.defaultProps = {
+    type: 'text'
 };

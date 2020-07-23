@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormInput } from "./parts/FormInput";
 import { Formik, Form } from 'formik'
 import {
@@ -16,6 +17,8 @@ const { Column } = Columns;
 const { Field, Control } = BulmaForm;
 
 export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
+
+    const { isLoading } = requestStatus;
 
     const inputs = [
         {
@@ -86,13 +89,15 @@ export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
                         >
                             {({ handleSubmit, handleReset }) => (
                                 <Form autoComplete="off">
+
                                     { inputs.map(({ name, label, type }, index) => <FormInput name={name} label={label} type={type} placeholder={label} key={index}/>) }
 
                                     <Field kind="group" className="has-text-centered is-block">
                                         <Control className="is-inline-block">
                                             <Button
+                                                disabled={isLoading}
                                                 type="submit"
-                                                className="is-success is-focused"
+                                                className={`is-success ${isLoading ? 'is-loading' : ''}`}
                                                 onClick={handleSubmit}
                                             >
                                                 Register
@@ -100,7 +105,8 @@ export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
                                         </Control>
                                         <Control className="is-inline-block">
                                             <Button
-                                                className="is-light is-focused"
+                                                disabled={isLoading}
+                                                className="is-light"
                                                 onClick={handleReset}
                                             >
                                                 Reset
@@ -116,4 +122,13 @@ export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
             </Columns>
         </Container>
     )
+};
+
+RegistrationForm.propTypes = {
+    requestStatus: PropTypes.exact({
+        isLoading: PropTypes.bool.isRequired,
+        success: PropTypes.bool.isRequired,
+        error: PropTypes.bool.isRequired
+    }),
+    setRequestStatus: PropTypes.func.isRequired
 };
