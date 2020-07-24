@@ -1,5 +1,5 @@
 require('dotenv').config({ path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env' });
-const { env: { NODE_ENV, SERVER_PORT, MONGODB_URI } } = process;
+const { env: { NODE_ENV, PORT, MONGODB_URI } } = process;
 
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
@@ -31,12 +31,12 @@ const resolvers = require('./resolvers');
 
     server.applyMiddleware({ app });
 
-    app.listen({ port: SERVER_PORT }, () => {
+    app.listen({ port: PORT }, () => {
         if ( NODE_ENV === 'production' ) {
-            console.log(`Yeah! Server ready at port: ${SERVER_PORT}`);
+            console.log(`Yeah! Server ready at port: ${PORT}`);
         } else {
-            console.log(`Yeah! Server ready at http://localhost:${SERVER_PORT}`);
-            console.log(`GraphQL Playground at http://localhost:${SERVER_PORT}/graphql`);
+            console.log(`Yeah! Server ready at http://localhost:${PORT}`);
+            console.log(`GraphQL Playground at http://localhost:${PORT}/graphql`);
         }
     });
 
