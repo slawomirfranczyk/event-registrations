@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon --exec node ./server.js",
+    "start": "node ./server.js",
     "test": "jest --watch"
   },
   "keywords": [],
