@@ -32,7 +32,9 @@ const resolvers = require('./resolvers');
     server.applyMiddleware({ app });
 
     app.listen({ port: SERVER_PORT }, () => {
-        if ( NODE_ENV !== 'production' ) {
+        if ( NODE_ENV === 'production' ) {
+            console.log(`Yeah! Server ready at port: ${SERVER_PORT}`);
+        } else {
             console.log(`Yeah! Server ready at http://localhost:${SERVER_PORT}`);
             console.log(`GraphQL Playground at http://localhost:${SERVER_PORT}/graphql`);
         }
