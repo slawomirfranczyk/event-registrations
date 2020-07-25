@@ -1,5 +1,5 @@
 const { Types: { ObjectId } } = require('mongoose');
-const { getFormattedDate, prepareDataBeforeResponse } = require('./../utils');
+const { getFormattedDate, prepareDataBeforeResponse, replaceMultipleSpaces } = require('./../utils');
 
 describe('utils function getFormattedDate', () => {
 
@@ -51,6 +51,36 @@ describe('utils function prepareDataBeforeResponse', () => {
         expect(lastName).toBe('Kowalski');
         expect(email).toBe('jan.kowalski@example.com');
         expect(eventDate).toBe('2020-07-01');
+
+    });
+
+});
+
+
+describe('utils function replaceMultipleSpaces', () => {
+
+    it("should remove multiple spaces and trim string", () => {
+
+        const value = '   Najkrótszy    dowcip   programistyczny:  "Już   prawie  skończyłem"';
+        const processedValue = replaceMultipleSpaces(value);
+
+        expect(processedValue).toBe('Najkrótszy dowcip programistyczny: "Już prawie skończyłem"');
+
+    });
+
+    it("should do nothing if value type is not a string or if string is empty", () => {
+
+        const value1 = '';
+        const value2 = null;
+        const value3 = { key: 'value' };
+
+        const processedValue1 = replaceMultipleSpaces(value1);
+        const processedValue2 = replaceMultipleSpaces(value2);
+        const processedValue3 = replaceMultipleSpaces(value3);
+
+        expect(processedValue1).toBe(value1);
+        expect(processedValue2).toBe(value2);
+        expect(processedValue3).toBe(value3);
 
     });
 

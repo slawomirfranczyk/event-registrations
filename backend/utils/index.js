@@ -9,4 +9,6 @@ const prepareDataBeforeResponse = registration => {
     };
 };
 
-module.exports = { getFormattedDate, prepareDataBeforeResponse };
+const replaceMultipleSpaces = val => typeof val === "string" ? val.replace(/\s\s+/g, ' ').trim() : val;
+
+module.exports = { getFormattedDate, prepareDataBeforeResponse, replaceMultipleSpaces };
