@@ -18,12 +18,11 @@ const typeDefs = gql`
     }
 
     type Query {
-        hello: String #todo delete
+        hello: String
     }
     
     type Mutation {
         createEventRegistration(data: EventRegistrationCreateInput):  EventRegistration!
-        deleteAllEventRegistrations: Int!
     }
 `;
 
