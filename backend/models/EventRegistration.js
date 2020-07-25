@@ -19,7 +19,7 @@ const EventRegistrationSchema = new mongoose.Schema({
         type: String,
         validate: {
             validator: val => emailRegExp.test(val),
-            message: ({ value }) => `\`${value}\` is not a valid email!`
+            message: ({ value, path }) => `Path \`${path}\` (\`${value}\`) is not a valid email!`
         },
         set: replaceMultipleSpaces
     },
