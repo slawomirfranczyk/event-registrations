@@ -20,11 +20,8 @@ const EventRegistrationSchema = new mongoose.Schema({
         }
     },
     eventDate: {
-        type: String,
-        validate: {
-            validator: val => /[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(val) && !/0000-00-00/.test(val),
-            message: ({ value }) => `\`${value}\` is not a valid date! Required date format: YYYY-MM-DD`
-        }
+        type: Date,
+        set: val => new Date(val)
     },
 });
 
