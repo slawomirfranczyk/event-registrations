@@ -4,9 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon --exec node ./server.js",
+    "dev": "nodemon --exec node ./server.js",
     "start": "node ./server.js",
-    "test": "jest --watch"
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "keywords": [],
   "author": "",
