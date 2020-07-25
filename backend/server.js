@@ -36,7 +36,7 @@ const resolvers = require('./resolvers');
             console.log(`Yeah! Server ready at port: ${PORT}`);
         } else {
             console.log(`Yeah! Server ready at http://localhost:${PORT}`);
-            console.log(`GraphQL Playground at http://localhost:${PORT}/graphql`);
+            console.log(`GraphQL Playground at http://localhost:${PORT}/${server.graphqlPath}`);
         }
     });
 
