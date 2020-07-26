@@ -21,7 +21,6 @@ const resolvers = require('./resolvers');
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        playground: NODE_ENV !== 'production',
         formatError: (err) => {
             // Don't give the specific errors to the client on production
             if (err && NODE_ENV === 'production') return new Error(err.message);
