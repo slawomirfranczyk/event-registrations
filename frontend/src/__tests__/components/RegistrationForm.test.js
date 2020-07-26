@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { RegistrationForm } from "../../components/RegistrationForm";
 import {act} from "@testing-library/react";
-import {convertDateToString} from "../../utils";
 
 describe('RegistrationForm component test', () => {
 
