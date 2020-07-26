@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.min.css';
 
 const { Input, Field, Control, Label, Help } = Form;
 
-export const FormInput = ({ label, ...props }) => {
+export const FormField = ({ label, ...props }) => {
 
     const [field] = useField(props);
     const { setFieldValue, touched, errors, handleBlur } = useFormikContext();
@@ -42,12 +42,12 @@ export const FormInput = ({ label, ...props }) => {
     );
 };
 
-FormInput.propTypes = {
+FormField.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired
 };
 
-FormInput.defaultProps = {
+FormField.defaultProps = {
     type: 'text'
 };

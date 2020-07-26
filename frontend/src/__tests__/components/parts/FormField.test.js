@@ -1,11 +1,11 @@
 import React from 'react';
-import { FormInput } from '../../../components/parts/FormInput';
+import { FormField } from '../../../components/parts/FormField';
 import { Formik, Form } from 'formik';
 import { mount } from 'enzyme';
 import { act } from "@testing-library/react";
 import * as yup from 'yup';
 
-describe('FormInput component test (text type input)', () => {
+describe('FormField component test (text type input)', () => {
 
     let form, props;
 
@@ -27,7 +27,7 @@ describe('FormInput component test (text type input)', () => {
                 validationSchema={validationSchema}
             >
                 <Form>
-                    <FormInput {...props}/>
+                    <FormField {...props}/>
                 </Form>
             </Formik>
         );
@@ -97,7 +97,7 @@ describe('FormInput component test (text type input)', () => {
 
 });
 
-describe('FormInput component test (date type input)', () => {
+describe('FormField component test (date type input)', () => {
 
     let form, props;
 
@@ -120,7 +120,7 @@ describe('FormInput component test (date type input)', () => {
                 validationSchema={validationSchema}
             >
                 <Form>
-                    <FormInput {...props}/>
+                    <FormField {...props}/>
                 </Form>
             </Formik>
         );

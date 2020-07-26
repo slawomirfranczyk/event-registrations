@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormInput } from "./parts/FormInput";
+import { FormField } from "./parts/FormField";
 import { Formik, Form } from 'formik'
 import {
     Container,
@@ -89,7 +89,7 @@ export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
                             {({ handleSubmit, handleReset }) => (
                                 <Form autoComplete="off">
 
-                                    { inputs.map(({ name, label, type }, index) => <FormInput name={name} label={label} type={type} placeholder={label} key={index}/>) }
+                                    { inputs.map(({ name, label, type }, index) => <FormField name={name} label={label} type={type} placeholder={label} key={index}/>) }
 
                                     <Field kind="group" className="has-text-centered is-block">
                                         <Control className="is-inline-block">
