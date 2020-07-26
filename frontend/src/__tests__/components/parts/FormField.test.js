@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik';
 import { mount } from 'enzyme';
 import { act } from "@testing-library/react";
 import * as yup from 'yup';
+import {convertDateToString, prepareDataBeforeSend} from "../../../utils";
 
 describe('FormField component test (text type input)', () => {
 
@@ -169,10 +170,11 @@ describe('FormField component test (date type input)', () => {
 
     it("should add 'is-success' css class to input", async () => {
 
-        const dateString = '2020-07-31';
+        const date = new Date(Date.now() + ( 3600 * 1000 * 24));
+        const dateString = convertDateToString(date);
 
         await act( async () => {
-            form.find('input#eventDate').simulate('change', { target: { name: 'eventDate', value: dateString } });
+            form.find('input#eventDate').simulate('change', { target: { name: 'eventDate', value: date } });
         });
 
         form.update();

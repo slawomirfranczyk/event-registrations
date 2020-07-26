@@ -1,22 +1,22 @@
-import { prepareDataBeforeSend } from '../../utils';
+import { convertDateToString } from '../../utils';
 
 describe('CreateEventRegistration mutation', () => {
 
-    it('should transform `eventDate` field from date object to string', () => {
+    it('should transform valid date object to string', () => {
 
-        const data = {
-            firstName : 'Jan',
-            lastName : 'Kowalski',
-            email : 'jan.kowalski@example.com',
-            eventDate : new Date('2020-02-25')
-        };
+        const date = new Date('2020-02-02');
+        const convertedDate = convertDateToString(date);
 
-        const processedData = prepareDataBeforeSend(data);
+        expect(convertedDate).toBe('2020-02-02')
 
-        expect(processedData.firstName).toBe(data.firstName);
-        expect(processedData.lastName).toBe(data.lastName);
-        expect(processedData.email).toBe(data.email);
-        expect(processedData.eventDate).toBe('2020-02-25');
+    });
+
+    it('should do nothing with invalid date', () => {
+
+        const date = new Date('2020-02-02abc');
+        const convertedDate = convertDateToString(date);
+
+        expect(convertedDate).toBe(date);
 
     });
 
