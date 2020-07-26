@@ -66,7 +66,6 @@ export const RegistrationForm = ({ requestStatus, setRequestStatus }) => {
                 <Column className="is-half is-offset-one-quarter">
                     <Box>
                         <Formik
-                            enableReinitialize={true}
                             initialValues={initValues}
                             validationSchema={validationSchema}
                             onSubmit={ async (values, { resetForm }) => {

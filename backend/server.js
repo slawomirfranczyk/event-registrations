@@ -1,5 +1,5 @@
 require('dotenv').config({ path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env' });
-const { env: { NODE_ENV, PORT, MONGODB_URI } } = process;
+const { NODE_ENV, PORT, MONGODB_URI } = process.env;
 
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
