@@ -1,6 +1,6 @@
 # Event Registrations
 
-Live demo: https://master.d1aatk18bph4he.amplifyapp.com
+Live demo <a href="https://master.d1aatk18bph4he.amplifyapp.com" target="_blank">link</a>
 
 - React aplication (AWS Amplify)
 - GraphQL API (Heroku)
